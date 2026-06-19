@@ -216,3 +216,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Experiment outputs (derived artifacts)
+experiment/**/data/output/
+
+# Node (commitlint / git hooks)
+node_modules/
