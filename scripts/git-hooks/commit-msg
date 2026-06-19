@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# commit-msg hook: strip AI coauthors → validate subject → commitlint
+set -euo pipefail
+
+export LANG="${LANG:-C.UTF-8}"
+export LC_ALL="${LC_ALL:-C.UTF-8}"
+
+MSG_FILE="${1:?usage: commit-msg <msg-file>}"
+MSG_FILE="${MSG_FILE//\\//}"
+
+HOOK_DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO_ROOT="$(git -C "$HOOK_DIR" rev-parse --show-toplevel 2>/dev/null || pwd)"
+
+SUBJECT=""
+while IFS= read -r line || [[ -n "$line" ]]; do
+  SUBJECT="$line"
+  break
+done <"$MSG_FILE"
+SUBJECT="${SUBJECT//$'\r'/}"
+
+if [[ "$SUBJECT" =~ ^(Merge |Revert |fixup!|squash!) ]]; then
+  exit 0
+fi
+
+bash "$HOOK_DIR/lib/strip-coauthors.sh" "$MSG_FILE"
+
+SUBJECT=""
+while IFS= read -r line || [[ -n "$line" ]]; do
+  SUBJECT="$line"
+  break
+done <"$MSG_FILE"
+SUBJECT="${SUBJECT//$'\r'/}"
+
+export VALIDATE_SUBJECT_LABEL="commit-msg hook"
+bash "$HOOK_DIR/lib/validate-commit-subject.sh" "$SUBJECT"
+
+cd "$REPO_ROOT"
+if [[ -f commitlint.config.cjs || -f .commitlintrc.cjs ]]; then
+  if ! npx --no-install commitlint --edit "$MSG_FILE" 2>/dev/null; then
+    npx -y -p @commitlint/cli@21 -p @commitlint/config-conventional@21 commitlint --edit "$MSG_FILE"
+  fi
+fi
+
+exit 0
