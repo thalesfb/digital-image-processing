@@ -2,65 +2,107 @@
 
 Repositório de experimentos práticos e roteiros pedagógicos de Processamento Digital de Imagens (PDI).
 
-[![CI](https://github.com/thalesfb/digital-image-processing/actions/workflows/ci.yml/badge.svg)](https://github.com/thalesfb/digital-image-processing/actions/workflows/ci.yml)
+[![CI](https://github.com/thalesfb/digital-image-processing/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/thalesfb/digital-image-processing/actions/workflows/ci.yml)
 [![GitHub release](https://img.shields.io/github/v/release/thalesfb/digital-image-processing?style=flat-square&logo=github)](https://github.com/thalesfb/digital-image-processing/releases)
-[![Python](https://img.shields.io/badge/python-3.14-3776ab?style=flat-square&logo=python&logoColor=white)](requirements.txt)
+[![Python](https://img.shields.io/badge/python-3.11+-3776ab?style=flat-square&logo=python&logoColor=white)](requirements.txt)
 [![OpenCV](https://img.shields.io/badge/opencv-4.8+-5C3EE8?style=flat-square&logo=opencv&logoColor=white)](requirements.txt)
-[![Commitlint](https://img.shields.io/badge/commitlint-sem%C3%A1ntico-brightgreen?style=flat-square&logo=commitlint&logoColor=white)](commitlint.config.cjs)
+[![Commitlint](https://img.shields.io/badge/commits-conventional-brightgreen?style=flat-square&logo=commitlint&logoColor=white)](docs/GIT_HOOKS.md)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
-## Fluxo de Processamento e Integração
+---
 
-O diagrama abaixo ilustra a evolução dos experimentos e o fluxo de dados entre os laboratórios desenvolvidos neste repositório:
+## Experimentos
+
+| Aula | Tema | Notebook |
+|------|------|----------|
+| 2 | Formação da Imagem | [`experiment/Aula 2/notebook.ipynb`](experiment/Aula%202/notebook.ipynb) |
+| 3 | Histograma | [`experiment/Aula 3/notebook.ipynb`](experiment/Aula%203/notebook.ipynb) |
+| 4 | Operações Lógicas e Aritméticas | [`experiment/Aula 4/notebook.ipynb`](experiment/Aula%204/notebook.ipynb) |
+| 5 | Pseudo-Coloração | [`experiment/Aula 5/notebook.ipynb`](experiment/Aula%205/notebook.ipynb) |
+
+---
+
+## Pipelines por Experimento
+
+### Aula 2 — Formação da Imagem
 
 ```mermaid
-flowchart TD
-    subgraph Aula 2: Formação da Imagem
-        CSV[imagem.csv] -->|Reshape 32x32| PNG[Imagem PNG]
-        PNG -->|Soma de Brilho| BRIGHT[Ajuste de Brilho]
-        BRIGHT -->|Salvar Lote| BATCH[Processamento em Lote]
-        BATCH -->|Gera Fixtures| FIXTURES[data/synthetic/]
-    end
+flowchart LR
+    CSV["📄 imagem.csv"] -->|"reshape 32×32"| GRAY["🖼️ Escala de Cinza"]
+    GRAY -->|"+ 100 (clamp)"| BGRAY["✨ Cinza Ajustado"]
+    BGRAY -->|"salvar PNG"| O1["data/output/"]
 
-    subgraph Aula 3: Histograma
-        FIXTURES -->|Entradas| HIST[Histogramas Gray/BGR]
-        HIST -->|Equalização| EQ[Equalização Global]
-        EQ -->|Limiarização| THRESH[Thresholding Binário]
-        THRESH -->|Contraste Local| CLAHE[CLAHE]
-        CLAHE -->|Não-Linear| GAMMA[Correção Gamma]
-    end
+    CSV -->|"reshape 32×32"| COLOR["🎨 BGR Colorida"]
+    COLOR -->|"+ 100 (clamp)"| BCOLOR["✨ Colorida Ajustada"]
+    BCOLOR -->|"salvar PNG"| O1
 
-    subgraph Aula 4: Aritmética & Lógica
-        MANDRIL[mandril.tif] -->|Negativo / Escalonamento| OUT4_1[Ajustes de Intensidade]
-        OUT4_1 -->|Blending Aritmético| OUT4_2[Mesclagem de Imagens]
-        MASKS[quadrado.png & tesoura.png] -->|Bitwise AND, OR, XOR, NOT| OUT4_3[Máscaras Lógicas]
-    end
-
-    subgraph Aula 5: Pseudo-Coloração
-        REMOTE[remote_sensing.png] -->|JET, HOT, TURBO, VIRIDIS, INFERNO| OUT5_1[Sensoriamento Remoto]
-        XRAY[radiografia.png] -->|BONE vs JET| OUT5_2[Imagem Médica]
-        WEBCAM[Webcam / Fallback] -->|Tempo Real + FPS| OUT5_3[Falsa Cor Dinâmica]
-        WIDGET[Dropdown Interact] -->|Aplicação Completa| OUT5_4[Salvar Interativo]
-    end
+    SYN["📁 data/synthetic/"] -->|"glob *.png"| BATCH["🔄 Lote de Imagens"]
+    BATCH -->|"+ 100 por canal"| O2["data/output/batch/"]
 ```
+
+### Aula 3 — Histograma
+
+```mermaid
+flowchart LR
+    LENNA["🖼️ Lenna (gray)"] -->|"calcular bins"| HGRAY["📊 Hist. Cinza"]
+    COLOR3["🎨 checker_color"]  -->|"split B,G,R"| HBGR["📊 Hist. BGR"]
+
+    HGRAY -->|"cv2.equalizeHist"| EQ["⚖️ Equalização Global"]
+    EQ    -->|"cv2.threshold"| THR["⬛ Thresholding"]
+    EQ    -->|"cv2.createCLAHE"| CLAHE["🔬 CLAHE"]
+    EQ    -->|"LUT γ"| GAMMA["🌗 Correção Gamma"]
+
+    THR   -->|"2 bins ativos"| OUT3["data/output/"]
+    CLAHE -->|"tiles locais"| OUT3
+    GAMMA -->|"γ=0.5 / γ=2.0"| OUT3
+```
+
+### Aula 4 — Operações Aritméticas e Lógicas
+
+```mermaid
+flowchart LR
+    MAN["🐒 mandril.tif"] -->|"255 − p"| NEG["🔄 Negativo"]
+    MAN -->|"escalar [100,200]"| SCALE["📉 Escalonamento"]
+    NEG & SCALE -->|"cv2.addWeighted"| BLEND["🔀 Blending"]
+    BLEND -->|"salvar"| OUT4["data/output/"]
+
+    SQ["⬜ quadrado.png"] --> LOGIC
+    TES["✂️ tesoura.png"] --> LOGIC
+    LOGIC{{"AND · OR\nXOR · NOT"}} -->|"máscaras"| OUT4
+```
+
+### Aula 5 — Pseudo-Coloração
+
+```mermaid
+flowchart LR
+    REMOTE["🛰️ remote_sensing.png"] -->|"JET / HOT\nTURBO / VIRIDIS"| OUT5A["🗺️ Sensoriamento Remoto"]
+    XRAY["🩻 radiografia.png"]       -->|"BONE vs JET"| OUT5B["🏥 Imagem Médica"]
+    CAM["📷 Webcam / Fallback"]      -->|"LUT tempo real + FPS"| OUT5C["🎞️ Falsa Cor Dinâmica"]
+    WIDGET["🎛️ Dropdown Interact"]   -->|"colormap selecionado"| OUT5D["💾 Salvar Interativo"]
+
+    OUT5A & OUT5B & OUT5C & OUT5D --> SAVE["data/output/"]
+```
+
+---
 
 ## Estrutura
 
 ```
 digital-image-processing/
-├── .githooks/              # git hooks
-├── .venv/                  # ambiente Python (local)
-├── commitlint.config.cjs     # regras de commit (Conventional Commits + gitmoji)
+├── .githooks/              # git hooks ativos
+├── .venv/                  # ambiente Python (local, não versionado)
+├── commitlint.config.cjs   # regras de commit (Conventional Commits + gitmoji)
 ├── docs/
 │   ├── EXECUTION.md        # guia passo a passo dos notebooks
-│   └── GIT_HOOKS.md        # convenção de commits
+│   ├── GIT_HOOKS.md        # convenção de commits
+│   └── slides/             # PDFs das aulas (Aulas 01–05)
 ├── experiment/
 │   ├── Aula 2/             # Formação da Imagem
 │   ├── Aula 3/             # Histograma
 │   ├── Aula 4/             # Operações Lógicas e Aritméticas
 │   └── Aula 5/             # Pseudo-Coloração
-├── requirements.txt        # deps Python
-├── package.json            # deps commitlint / hooks
+├── requirements.txt        # dependências Python
+├── package.json            # dependências commitlint / hooks
 └── scripts/
     ├── setup.ps1           # setup completo (Windows)
     ├── setup.sh            # setup completo (Linux/macOS)
@@ -69,17 +111,7 @@ digital-image-processing/
     └── git-hooks/          # fonte dos hooks
 ```
 
-## Regra: sempre use o ambiente virtual
-
-**Todo** comando Python (`python`, `pip`, `jupyter`) e **todo** notebook deve usar o `.venv` deste repositório — nunca o Python global do sistema.
-
-```powershell
-# Em cada nova sessão de terminal:
-. .\scripts\activate.ps1          # ativa .venv (note o "." no início)
-.\scripts\verify-env.ps1          # confirma que está correto
-```
-
-No Cursor/VS Code: o interpretador já aponta para `.venv` (`.vscode/settings.json`). Nos notebooks, use o kernel **PDI (.venv)**.
+---
 
 ## Quick Start
 
@@ -87,14 +119,17 @@ No Cursor/VS Code: o interpretador já aponta para `.venv` (`.vscode/settings.js
 
 ```powershell
 cd C:\dev\digital-image-processing
-.\scripts\setup.ps1               # cria .venv (uma vez)
-. .\scripts\activate.ps1          # ativa .venv (sempre)
-.\scripts\verify-env.ps1
+.\scripts\setup.ps1               # cria .venv (uma única vez)
+. .\scripts\activate.ps1          # ativa .venv (toda nova sessão)
+.\scripts\verify-env.ps1          # confirma ambiente correto
 ```
 
-Abra [`experiment/Aula 2/notebook.ipynb`](experiment/Aula%202/notebook.ipynb) com kernel **PDI (.venv)**.
+> **Regra absoluta:** todo comando `python` / `pip` / Jupyter **deve** usar o `.venv` deste repositório — nunca o Python global.  
+> No Cursor/VS Code o interpretador já aponta para `.venv` (`.vscode/settings.json`). Nos notebooks use o kernel **PDI (.venv)**.
 
 Guia detalhado: [`docs/EXECUTION.md`](docs/EXECUTION.md)
+
+---
 
 ## Setup manual
 
@@ -108,56 +143,34 @@ pip install -r requirements.txt
 python -m ipykernel install --user --name=pd-images --display-name="PDI (.venv)"
 ```
 
-> Após o setup, **sempre** ative o `.venv` antes de `pip`, `python` ou notebooks.
-
-### Git hooks (commits)
+### Git hooks (validação de commits)
 
 ```powershell
 npm install
 npm run hooks:install:win
 ```
 
-Convenção: [`docs/GIT_HOOKS.md`](docs/GIT_HOOKS.md)
+Formato obrigatório: `:sparkles: feat(aula2): add grayscale brighten pipeline`  
+Referência completa: [`docs/GIT_HOOKS.md`](docs/GIT_HOOKS.md)
 
-Formato: `:books: docs(aula2): add execution guide`
+---
 
-## Executar experimentos
+## Executar um experimento
 
 1. **Ative o `.venv`** — `. .\scripts\activate.ps1` (obrigatório em todo terminal)
-2. Abra o notebook da aula
-3. Kernel **PDI (.venv)** (obrigatório — nunca use Python global)
-4. Execute células em ordem (Partes 0–6)
-5. Preencha células **Respostas**
+2. Abra o notebook da aula desejada
+3. Selecione o kernel **PDI (.venv)**
+4. Execute as células em ordem (Partes 0 → final)
+5. Preencha as seções **Respostas**
 
-### Aula 2 — Formação da Imagem
-
-- Converter `imagem.csv` em PNG
-- Transformação pontual (+100) em escala de cinza e colorida
-- Processamento em lote de diretório
-
-**Pastas:**
-
-| Caminho | Conteúdo | Git |
-|---------|----------|-----|
-| `experiment/Aula 2/imagem.csv` | Fonte | versionado |
-| `experiment/Aula 2/data/synthetic/` | Fixtures | opcional |
-| `experiment/Aula 2/data/output/` | Saídas | ignorado |
-
-## Commits
-
-Hooks validam: ASCII, gitmoji shortcode, Conventional Commits, subject em inglês (72 chars).
-
-```powershell
-git commit -m ":sparkles: feat(aula2): add grayscale brighten pipeline"
-```
-
-Merge commits e `Revert` passam automaticamente.
+---
 
 ## Integração Contínua e Releases (CI/CD)
 
-Este repositório utiliza **GitHub Actions** para automação de testes e entregas:
-- **Integração Contínua (CI):** Validação automática de todos os notebooks de forma headless (`scripts/run_ci_tests.py`) a cada push ou Pull Request para a branch `main`.
-- **Releases Automáticos:** Ao criar e subir uma tag de versão (ex: `v1.0.0`), um release é gerado automaticamente no GitHub com notas de versão baseadas nos commits.
+- **CI:** Todos os notebooks são validados de forma headless via `scripts/run_ci_tests.py` a cada push / PR para `main`.
+- **Release:** Uma tag `vX.Y.Z` gera automaticamente um release no GitHub com notas baseadas nos commits.
+
+---
 
 ## Troubleshooting
 
@@ -169,7 +182,9 @@ Este repositório utiliza **GitHub Actions** para automação de testes e entreg
 | Hook não roda | `npm run hooks:install:win` + Git Bash instalado |
 | Repo no Google Drive | Mova para `C:\dev\digital-image-processing` |
 
+---
+
 ## Referências
 
 - Notebooks de estudo: [machine_learning](https://github.com/thalesfb/machine_learning)
-- **Guia de Desenvolvimento e Handoff:** [`AGENTS.md`](AGENTS.md)
+- **Guia de Desenvolvimento:** [`AGENTS.md`](AGENTS.md)
