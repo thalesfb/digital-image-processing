@@ -24,16 +24,9 @@ def run_notebook(nb_path: Path) -> bool:
     cv2.destroyAllWindows = lambda *args, **kwargs: None
     cv2.imshow = lambda *args, **kwargs: None
     
-    # Build a CI-friendly sys shim so the .venv guard in notebooks passes.
-    # The guard checks: if ".venv" not in Path(sys.executable).as_posix()
-    # In CI the real executable has no ".venv" component, so we fake it.
-    _ci_sys = types.ModuleType("sys")
-    _ci_sys.__dict__.update(sys.__dict__)          # inherit everything
-    _ci_sys.executable = str(Path(sys.executable).parent / ".venv" / "bin" / "python")
-
     # Pre-mock ipywidgets so Aula 5 interact() calls are no-ops in headless mode.
     _widgets_mock = types.ModuleType("ipywidgets")
-    _widgets_mock.interact = lambda f, **kw: f(**{k: v.value if hasattr(v, 'value') else v for k, v in kw.items()})
+    _widgets_mock.interact = lambda f, **kw: f(**{k: v.value if hasattr(v, "value") else v for k, v in kw.items()})
     _widgets_mock.Dropdown = lambda **kw: types.SimpleNamespace(value=kw.get("options", [None])[0])
     sys.modules.setdefault("ipywidgets", _widgets_mock)
 
@@ -41,8 +34,7 @@ def run_notebook(nb_path: Path) -> bool:
     namespace = {
         "__file__": str(nb_path),
         "__name__": "__main__",
-        "sys": _ci_sys,          # notebooks see the shim, not the real sys
-        "CI": True,              # notebooks can check: if not globals().get('CI')
+        "CI": True,   # notebooks can gate interactive-only code: if not globals().get("CI")
     }
     
     # Temporarily switch working directory to the notebook's folder
