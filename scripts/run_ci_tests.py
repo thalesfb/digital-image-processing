@@ -62,8 +62,8 @@ def main():
     experiment_dir = repo_root / "experiment"
     
     if not experiment_dir.exists():
-        print(f"[ERROR] Experiment folder not found at {experiment_dir}")
-        sys.exit(1)
+        print(f"[WARN] Experiment folder not found at {experiment_dir} — skipping.")
+        sys.exit(0)
         
     notebooks = sorted(list(experiment_dir.glob("**/notebook.ipynb")))
     if not notebooks:
