@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/thalesfb/digital-image-processing/compare/v1.0.0...v1.1.0) (2026-06-23)
+
+
+### Features
+
+* **aula6:** add filtering and enhancement experiments ([#14](https://github.com/thalesfb/digital-image-processing/issues/14)) ([e4fa739](https://github.com/thalesfb/digital-image-processing/commit/e4fa739e626b1e9125be807ac21209a429c67a77))
+
 # 1.0.0 (2026-06-20)
 
 
