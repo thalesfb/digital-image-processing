@@ -45,6 +45,7 @@ Abra o notebook correspondente à aula desejada no Cursor/VS Code:
 - Aula 3: `experiment/Aula 3/notebook.ipynb`
 - Aula 4: `experiment/Aula 4/notebook.ipynb`
 - Aula 5: `experiment/Aula 5/notebook.ipynb`
+- Aula 6: `experiment/Aula 6/notebook.ipynb`
 
 **Importante:** selecione o kernel **PDI (.venv)** (canto superior direito) em cada notebook aberto.
 
@@ -86,6 +87,19 @@ Execute as células **de cima para baixo**, preenchendo as seções de resposta 
 - Parte 4: Pseudo-coloração em tempo real via Webcam (com simulação/fallback offline).
 - Parte 5: Aplicação interativa dinâmica completa para testar e salvar imagens pseudo-coloridas.
 - Parte 6: Síntese conceitual e fechamento.
+
+#### Aula 6 — Operações de Filtragem
+- Experimento 1: Diferença absoluta e equalização básica.
+- Experimento 2: Identificação de divergências em máscaras.
+- Experimento 3: Subtração para identificação de defeitos em placas de circuito (PCB).
+- Experimento 4: Transformação linear de brilho.
+- Experimento 5: Transformação de potência (Ajuste Gamma).
+- Experimento 6: Equalização de Histograma Global (comparativos lado-a-lado).
+- Experimento 7: Equalização Adaptativa (CLAHE) para melhoria de contraste local.
+- Experimento 8: Suavização passa-baixa combinada com detector Canny (Bordas).
+- Experimento 9: Remoção de ruído Sal e Pimenta usando Filtros Medianos.
+- Experimento 10: Melhoria de Nitidez com máscara Unsharp Masking.
+- Experimento 11: Análise comparativa de detecção de bordas pré e pós-nitidez.
 
 ### 4. Verificar saídas
 
