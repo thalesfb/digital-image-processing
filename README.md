@@ -19,6 +19,7 @@ Repositório de experimentos práticos e roteiros pedagógicos de Processamento 
 | 3 | Histograma | [`experiment/Aula 3/notebook.ipynb`](experiment/Aula%203/notebook.ipynb) |
 | 4 | Operações Lógicas e Aritméticas | [`experiment/Aula 4/notebook.ipynb`](experiment/Aula%204/notebook.ipynb) |
 | 5 | Pseudo-Coloração | [`experiment/Aula 5/notebook.ipynb`](experiment/Aula%205/notebook.ipynb) |
+| 6 | Operações de Filtragem | [`experiment/Aula 6/notebook.ipynb`](experiment/Aula%206/notebook.ipynb) |
 
 ---
 
@@ -85,6 +86,22 @@ flowchart LR
 
 ---
 
+### Aula 6 — Operações de Filtragem
+
+```mermaid
+flowchart LR
+    INPUT1["🎭 mask & live"]        -->|"cv2.absdiff + equalizeHist"| OUT6A["🧮 Diferença & Equalização"]
+    INPUT2["🔆 parrot"]             -->|"convertScaleAbs / LUT"| OUT6B["☀️ Brilho & Gamma"]
+    INPUT3["🦷 dental & skull"]     -->|"cv2.createCLAHE"| OUT6C["📊 CLAHE Adaptativo"]
+    INPUT4["🚲 croppedBike"]        -->|"GaussianBlur + Canny"| OUT6D["🔪 Passa-baixa + Bordas"]
+    INPUT5["🧂 noise.png"]          -->|"medianBlur 3x3 / 5x5"| OUT6E["🧹 Filtro Mediano"]
+    INPUT6["🌫️ blur.webp"]          -->|"Unsharp Masking"| OUT6F["🎯 Melhoria de Nitidez"]
+
+    OUT6A & OUT6B & OUT6C & OUT6D & OUT6E & OUT6F --> SAVE6["data/output/"]
+```
+
+---
+
 ## Estrutura
 
 ```
@@ -95,12 +112,13 @@ digital-image-processing/
 ├── docs/
 │   ├── EXECUTION.md        # guia passo a passo dos notebooks
 │   ├── GIT_HOOKS.md        # convenção de commits
-│   └── slides/             # PDFs das aulas (Aulas 01–05)
+│   └── slides/             # PDFs das aulas (Aulas 01–06)
 ├── experiment/
 │   ├── Aula 2/             # Formação da Imagem
 │   ├── Aula 3/             # Histograma
 │   ├── Aula 4/             # Operações Lógicas e Aritméticas
-│   └── Aula 5/             # Pseudo-Coloração
+│   ├── Aula 5/             # Pseudo-Coloração
+│   └── Aula 6/             # Operações de Filtragem
 ├── requirements.txt        # dependências Python
 ├── package.json            # dependências commitlint / hooks
 └── scripts/
