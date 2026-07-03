@@ -1,0 +1,73 @@
+# Dependabot config — Optimizr Org standard.
+# Fonte: optimizr-infra-ops/templates/dependabot.yml
+# Ver docs/DEPENDABOT_STANDARDS.md (optimizr-infra-ops) pras decisoes de schedule/grouping.
+
+version: 2
+
+updates:
+  # GitHub Actions — mantém SHAs pinned atualizados de actions third-party.
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "08:00"
+      timezone: America/Sao_Paulo
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - github-actions
+    commit-message:
+      prefix: ":arrow_up: chore"
+      include: scope
+    groups:
+      github-actions-minor-and-patch:
+        applies-to: version-updates
+        update-types:
+          - minor
+          - patch
+
+  # npm — release tooling (semantic-release, commitlint).
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "08:00"
+      timezone: America/Sao_Paulo
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - npm
+    commit-message:
+      prefix: ":arrow_up: chore"
+      prefix-development: ":arrow_up: chore"
+      include: scope
+    groups:
+      npm-minor-and-patch:
+        applies-to: version-updates
+        update-types:
+          - minor
+          - patch
+
+  # Python — pip ecosystem cobre requirements.txt (OpenCV, Jupyter experiments).
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "08:00"
+      timezone: America/Sao_Paulo
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - python
+    commit-message:
+      prefix: ":arrow_up: chore"
+      include: scope
+    groups:
+      python-minor-and-patch:
+        applies-to: version-updates
+        update-types:
+          - minor
+          - patch
