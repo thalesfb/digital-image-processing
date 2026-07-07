@@ -24,6 +24,15 @@ Repositório de experimentos práticos e roteiros pedagógicos de Processamento 
 
 ---
 
+## Avaliações
+
+| Atividade | Descrição | Folha de Respostas | Notebook de Execução |
+|-----------|-----------|--------------------|----------------------|
+| Atividade Avaliativa I | Conceitos Teóricos de PDI, Histogramas e Binarizações | [`Respostas_Atividade_I.md`](docs/avaliacao/atividade_i/Respostas_Atividade_I.md) | N/A |
+| Atividade Avaliativa II | Filtros, Limpeza Morfológica e Detecção de Cones com OpenCV | [`Respostas_Atividade_II.md`](docs/avaliacao/atividade_ii/Respostas_Atividade_II.md) | [`notebook.ipynb`](docs/avaliacao/atividade_ii/notebook.ipynb) |
+
+---
+
 ## Pipelines por Experimento
 
 ### Aula 2 — Formação da Imagem
@@ -129,6 +138,8 @@ digital-image-processing/
 │   ├── EXECUTION.md        # guia passo a passo dos notebooks
 │   ├── GIT_HOOKS.md        # convenção de commits
 │   ├── avaliacao/          # provas e avaliações do curso
+│   │   ├── atividade_i/    # enunciado e respostas da Atividade I
+│   │   └── atividade_ii/   # enunciado, respostas e notebook da Atividade II
 │   └── slides/             # PDFs das aulas (Aulas 01–07)
 ├── experiment/
 │   ├── Aula 2/             # Formação da Imagem
