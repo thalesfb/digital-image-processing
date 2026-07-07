@@ -46,6 +46,7 @@ Abra o notebook correspondente à aula desejada no Cursor/VS Code:
 - Aula 4: `experiment/Aula 4/notebook.ipynb`
 - Aula 5: `experiment/Aula 5/notebook.ipynb`
 - Aula 6: `experiment/Aula 6/notebook.ipynb`
+- Aula 7: `experiment/Aula 7/notebook.ipynb`
 
 **Importante:** selecione o kernel **PDI (.venv)** (canto superior direito) em cada notebook aberto.
 
@@ -100,6 +101,15 @@ Execute as células **de cima para baixo**, preenchendo as seções de resposta 
 - Experimento 9: Remoção de ruído Sal e Pimenta usando Filtros Medianos.
 - Experimento 10: Melhoria de Nitidez com máscara Unsharp Masking.
 - Experimento 11: Análise comparativa de detecção de bordas pré e pós-nitidez.
+
+#### Aula 7 — Operações Morfológicas
+- Experimento 1.1: Binarização de `rice.png` e efeitos de Dilatação, Erosão, Abertura e Fechamento.
+- Experimento 1.2: Binarização e melhoria de caracteres de `placa.png` usando Dilatação e Erosão.
+- Experimento 1.3: Segmentação de `moedas.png` e extração de contornos/bordas com Gradiente Morfológico.
+- Experimento 2: Efeito de tamanhos de elementos estruturantes (3x3, 5x5, 9x9) em `RuidoBinario.png`.
+- Experimento 3: Restauração de imagem com ruído (`Morfo2ComRuido.png`) por combinações de Abertura/Fechamento.
+- Experimento 4: Detecção de contorno na imagem `contorno_original.png` por Gradiente Morfológico.
+- Experimento 5: Aplicação de Gradiente Morfológico, Top Hat e Black Hat na imagem `lena.png` em escala de cinza.
 
 ### 4. Verificar saídas
 
