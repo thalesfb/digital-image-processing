@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/thalesfb/digital-image-processing/compare/v1.2.0...v1.3.0) (2026-07-07)
+
+
+### Features
+
+* **avaliacao:** solve Atividade Avaliativa II ([#36](https://github.com/thalesfb/digital-image-processing/issues/36)) ([6e7043f](https://github.com/thalesfb/digital-image-processing/commit/6e7043fabf2e6ba9bf71433203c854e6a1e1fad7))
+
 # [1.2.0](https://github.com/thalesfb/digital-image-processing/compare/v1.1.0...v1.2.0) (2026-07-07)
 
 
