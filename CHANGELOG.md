@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/thalesfb/digital-image-processing/compare/v1.1.0...v1.2.0) (2026-07-07)
+
+
+### Features
+
+* **aula7:** implement morphological experiments and solve Prova I ([#35](https://github.com/thalesfb/digital-image-processing/issues/35)) ([b660531](https://github.com/thalesfb/digital-image-processing/commit/b6605313e4e7a192dfde4f03901884794fba754b))
+
 # [1.1.0](https://github.com/thalesfb/digital-image-processing/compare/v1.0.0...v1.1.0) (2026-06-23)
 
 
