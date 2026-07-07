@@ -20,6 +20,7 @@ Repositório de experimentos práticos e roteiros pedagógicos de Processamento 
 | 4 | Operações Lógicas e Aritméticas | [`experiment/Aula 4/notebook.ipynb`](experiment/Aula%204/notebook.ipynb) |
 | 5 | Pseudo-Coloração | [`experiment/Aula 5/notebook.ipynb`](experiment/Aula%205/notebook.ipynb) |
 | 6 | Operações de Filtragem | [`experiment/Aula 6/notebook.ipynb`](experiment/Aula%206/notebook.ipynb) |
+| 7 | Operações Morfológicas | [`experiment/Aula 7/notebook.ipynb`](experiment/Aula%207/notebook.ipynb) |
 
 ---
 
@@ -100,6 +101,21 @@ flowchart LR
     OUT6A & OUT6B & OUT6C & OUT6D & OUT6E & OUT6F --> SAVE6["data/output/"]
 ```
 
+### Aula 7 — Operações Morfológicas
+
+```mermaid
+flowchart LR
+    INPUT7A["🌾 rice.png"]        -->|"threshold + Morph Ops"| OUT7A["🍚 Binarização & Dil/Ero/Abert/Fech"]
+    INPUT7B["🚗 placa.png"]       -->|"Otsu + Dil/Ero"| OUT7B["🔢 Caracteres da Placa"]
+    INPUT7C["🪙 moedas.png"]      -->|"Otsu + Closing + Gradient"| OUT7C["🔘 Contornos de Moedas"]
+    INPUT7D["🏁 RuidoBinario.png"] -->|"Morph Ops com Kernels 3/5/9"| OUT7D["🌀 Filtros por Elemento Estruturante"]
+    INPUT7E["🔍 Morfo2ComRuido"]  -->|"Abertura ➡️ Fechamento"| OUT7E["🧼 Restauração de Imagem"]
+    INPUT7F["🔲 contorno_original"]-->|"cv2.MORPH_GRADIENT"| OUT7F["📐 Detecção de Contorno"]
+    INPUT7G["👩 lena.png (gray)"]  -->|"Gradient / Top-Hat / Black-Hat"| OUT7G["⚙️ Morfologia Grayscale"]
+
+    OUT7A & OUT7B & OUT7C & OUT7D & OUT7E & OUT7F & OUT7G --> SAVE7["data/output/"]
+```
+
 ---
 
 ## Estrutura
@@ -112,13 +128,15 @@ digital-image-processing/
 ├── docs/
 │   ├── EXECUTION.md        # guia passo a passo dos notebooks
 │   ├── GIT_HOOKS.md        # convenção de commits
-│   └── slides/             # PDFs das aulas (Aulas 01–06)
+│   ├── avaliacao/          # provas e avaliações do curso
+│   └── slides/             # PDFs das aulas (Aulas 01–07)
 ├── experiment/
 │   ├── Aula 2/             # Formação da Imagem
 │   ├── Aula 3/             # Histograma
 │   ├── Aula 4/             # Operações Lógicas e Aritméticas
 │   ├── Aula 5/             # Pseudo-Coloração
-│   └── Aula 6/             # Operações de Filtragem
+│   ├── Aula 6/             # Operações de Filtragem
+│   └── Aula 7/             # Operações Morfológicas
 ├── requirements.txt        # dependências Python
 ├── package.json            # dependências commitlint / hooks
 └── scripts/
